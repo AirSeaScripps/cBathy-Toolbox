@@ -1,67 +1,31 @@
-% This script is designed to demonstrate the cBathy Toolbox in production
-% mode and in debug mode. It also demonstrates some of the plotting
-% functions to investigate cBathy results. It was originally developed as a
-% demonstration for CIRN Boot Camp #1, 3/2017 and has been updated for 2023.
-% It is designed to be stepped through line by line while reading the comments.
-% This routine is intended to be run from the cBathy toolbox.  Normally you
-% would run cBathy from a separate directory and would write-protect the
-% cBathy directory.  But this simplifies paths.
-% This routine uses data from a folder "DemoData" that is part of the toolbox. 
-% This contains data from two contrasting runs from 2015.  In addition, the
-% Kalman filtering demo toward the end expects to be able to write its
-% output to a directory in the local directory.  If you don't have write
-% permission, you will need to specify an alternate location around line 12 of
-% demoKalmanFiltering (variable cBOutputPn) where you do have write
-% permission.
-%
-% During the boot camp, we will go through this routine step by step (cut 
-% and paste) as a way to explain all the features of cBathy.  If not at 
-% the boot camp, we recommend that you also go line by line to best 
-% understand.  The routine can also be used simply as examples of code that 
-% you might use later.
-
-%  Rob Holman, April, 2023.
 
 clear
 
-% look at the contents of the toolbox using the local toolbox name.  
-% You may want to simplify this name to something like "cBathy".
-% help cbathy-Toolbox-master-2;       % this is the CIRN default name
 
-%% set to production mode and process
-% First open the "settings" file argus02b.m in the editor and look at inputs
-% Ensure that production mode = 1 and reduce xyMinMax to [80 500 0 1000]
-% edit argus02b
+%% Edit the settings file and load the data
+% First open the "settings" file DoppVis_settings.m in the editor and check
+% the input parameters.
+% Ensure that production mode = 1 (unless you want to run in debug mode)
 
-% Let's pick a low energy example run stored in DemoData
-snapPn = 'DemoData/1447691400.Mon.Nov.16_16_30_00.GMT.2015.argus02b.c2.snap.jpg';
-dataStackName = 'DemoData/1447691340.Mon.Nov.16_16_29_00.GMT.2015.argus02b.cx.mBW.mat';
+% Load the DoppVis data and convert it to cBathy format
+% DoppVis example datacube
+doppvis_dir = '/Users/gsinnett/Documents/AirSea_Lab/Test_Cubes/';
+cubeName = 'CUBE0909_DX0.5_NX512_UTM_X0000293400_UTM_Y0003784253_DT0.5_NT193_TI20231031_190902_555UTC_TF20231031_191038_555UTC.mat'; % offshore cube
+% cubeName = 'CUBE0989_DX0.5_NX512_UTM_X0000293656_UTM_Y0003784253_DT0.5_NT198_TI20231031_190902_555UTC_TF20231031_191041_055UTC.mat'; % onshore cube
+load([doppvis_dir cubeName])
 
-% Here is a more energetic run two days later.  Un-comment and use this as 
-% a second example later, running the same analysis fo these different
-% conditions
- % snapPn = 'DemoData/1447864200.Wed.Nov.18_16_30_00.GMT.2015.argus02b.c2.snap.jpg';
- % dataStackName = 'DemoData/1447862340.Wed.Nov.18_15_59_00.GMT.2015.argus02b.cx.mBW.mat';
-
-% show the snapshot from this time to get a feel for the waves
-% ISnap = imread(snapPn);
-% figure(3); clf; imagesc(ISnap); axis off; title(snapPn)
-
-% Now load the stack then look at the variables.  Note the number of
-% pixels and the number of samples in time.  There is XYZ data for each
-% pixel.  We use RAW as the variable name for the data.  
-load(dataStackName) 
-whos
+[CAM,RAW,T,XYZ] = DoppVis2cBathy(RES);
+clearvars RES
 
 % now load the params file and look at the params variable
-stationStr = 'argus02b';
-eval(stationStr)        % creates the params structure.
-clear bathy
+settings_file = 'DoppVis_settings';
+eval(settings_file)        % creates the params structure.
+clear bathy % make sure we're working on a new bathy structure
 
-%% The following are what you need to do to run cBathy
+%% Run cBathy
 % Create a few basic parts of the output bathy structure.
 bathy.epoch = num2str(T(1));        % epoch time start of collect
-bathy.sName = dataStackName;        % stack name for the record
+bathy.sName = cubeName;        % stack name for the record
 bathy.params = params;              % save the params data
 
 % now carry out the cBathy analysis.  Omit the semicolon at the end so we
