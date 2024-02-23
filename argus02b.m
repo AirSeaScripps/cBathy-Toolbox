@@ -2,9 +2,9 @@
 params.stationStr = 'argus02b';
 params.dxm = 10;                    % analysis domain spacing in x
 params.dym = 25;                    % analysis domain spacing in y
-params.xyMinMax = [80 500 0 1000];   % min, max of x, then y
+params.xyMinMax = [80 800 -500 1500];   % min, max of x, then y
                                     % default to [] for cBathy to choose
-params.tideFunction = 'findTideForCIRNDemo2023';  % tide level function for evel
+params.tideFunction = 'cBathyTide';  % tide level function for evel
 
 %%%%%%%   Power user settings from here down   %%%%%%%
 params.MINDEPTH = 0.25;             % for initialization and final QC

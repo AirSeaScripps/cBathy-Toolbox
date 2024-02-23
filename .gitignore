@@ -2,9 +2,3 @@
 MadeiraBeachcBathy.m
 MadeiraBeachParams.m
 MadeiraBeachTide.m
-
-# Git stuff 
-*.DS_Store
-
-# MATLAB stuff 
-*.asv

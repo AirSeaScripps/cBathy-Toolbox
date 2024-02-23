@@ -40,8 +40,8 @@ dataStackName = 'DemoData/1447691340.Mon.Nov.16_16_29_00.GMT.2015.argus02b.cx.mB
 % Here is a more energetic run two days later.  Un-comment and use this as 
 % a second example later, running the same analysis fo these different
 % conditions
- % snapPn = 'DemoData/1447864200.Wed.Nov.18_16_30_00.GMT.2015.argus02b.c2.snap.jpg';
- % dataStackName = 'DemoData/1447862340.Wed.Nov.18_15_59_00.GMT.2015.argus02b.cx.mBW.mat';
+%  snapPn = 'DemoData/1447864200.Wed.Nov.18_16_30_00.GMT.2015.argus02b.c2.snap.jpg';
+%  dataStackName = 'DemoData/1447862340.Wed.Nov.18_15_59_00.GMT.2015.argus02b.cx.mBW.mat';
 
 % show the snapshot from this time to get a feel for the waves
 ISnap = imread(snapPn);
@@ -83,7 +83,7 @@ xInds = find(b.xm <= 500);
 % first plot the cBathy result, removing results for which hErr > 0.5 m (or
 % you can choose a different threshold.  Note that for the first data run
 % this only removes a few shoreline points.
-figure(4); clf; colormap(flipud(jet))
+figure(2); clf; colormap(flipud(jet))
 subplot(121); 
 bad = find(bathy.fCombined.hErr > 0.5);    % don't plot data with high hErr
 h = bathy.fCombined.h; h(bad) = nan;
