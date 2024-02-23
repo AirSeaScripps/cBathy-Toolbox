@@ -26,12 +26,12 @@ clear
 
 % look at the contents of the toolbox using the local toolbox name.  
 % You may want to simplify this name to something like "cBathy".
-% help cbathy-Toolbox-master-2;       % this is the CIRN default name
+help cbathy-Toolbox-master-2;       % this is the CIRN default name
 
 %% set to production mode and process
 % First open the "settings" file argus02b.m in the editor and look at inputs
 % Ensure that production mode = 1 and reduce xyMinMax to [80 500 0 1000]
-% edit argus02b
+edit argus02b
 
 % Let's pick a low energy example run stored in DemoData
 snapPn = 'DemoData/1447691400.Mon.Nov.16_16_30_00.GMT.2015.argus02b.c2.snap.jpg';
@@ -44,8 +44,8 @@ dataStackName = 'DemoData/1447691340.Mon.Nov.16_16_29_00.GMT.2015.argus02b.cx.mB
  % dataStackName = 'DemoData/1447862340.Wed.Nov.18_15_59_00.GMT.2015.argus02b.cx.mBW.mat';
 
 % show the snapshot from this time to get a feel for the waves
-% ISnap = imread(snapPn);
-% figure(3); clf; imagesc(ISnap); axis off; title(snapPn)
+ISnap = imread(snapPn);
+figure(3); clf; imagesc(ISnap); axis off; title(snapPn)
 
 % Now load the stack then look at the variables.  Note the number of
 % pixels and the number of samples in time.  There is XYZ data for each

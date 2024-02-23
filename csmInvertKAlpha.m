@@ -131,7 +131,7 @@ for i = 1:length(fs)         % frequency loop
                 if  bathy.params.nlinfit == 1 % use nlinfit
                     [kAlpha,resid,jacob] = nlinfit([xy w], [real(v); imag(v)],...
                         'predictCSM',kAlphaInit, OPTIONS);
-                elseif  bathy.params.nlinfit == 0 % if stats toolbox is not available, set the nlinfit flag to 0
+                elseif  bathy.params.nlinfit == 0 % if stats toolbox is no available, set the nlinfit flag to 0
                     [kAlpha,~,~, ~, ~,A,resid] = LMFnlsq('res',kAlphaInit,...
                         [xy w], [real(v); imag(v)], 'Display',0);
                     kAlpha = kAlpha';

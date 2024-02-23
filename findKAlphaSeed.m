@@ -21,7 +21,7 @@ va = angle(v);
 
 %% Interpolation (Radon only works on equidistantly space data)
 % note, dx and dy can be modified
-dxy = 0.25;	% changed 4 due to smaller grid spacing
+dxy = 4;	% changed from 2 to speed things up.
 x1 = min(xy(:,1)); x2 = max(xy(:,1)); y1 = min(xy(:,2)); y2 = max(xy(:,2));
 x = x1: dxy: x2;
 y = y1: dxy: y2;
