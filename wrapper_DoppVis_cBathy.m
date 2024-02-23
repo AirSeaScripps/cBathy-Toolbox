@@ -10,7 +10,7 @@ clear
 % Load the DoppVis data and convert it to cBathy format
 % DoppVis example datacube
 doppvis_dir = '/Users/gsinnett/Documents/AirSea_Lab/Test_Cubes/';
-cubeName = 'CUBE0909_DX0.5_NX512_UTM_X0000293400_UTM_Y0003784253_DT0.5_NT193_TI20231031_190902_555UTC_TF20231031_191038_555UTC.mat'; % offshore cube
+cubeName = 'CUBE0294_DX0.5_NX512_UTM_X0000387834_UTM_Y0004071788_DT0.5_NT061_TI20230424_222757_554UTC_TF20230424_222830_054UTC.mat'; % SMODE wavy cube
 % cubeName = 'CUBE0989_DX0.5_NX512_UTM_X0000293656_UTM_Y0003784253_DT0.5_NT198_TI20231031_190902_555UTC_TF20231031_191041_055UTC.mat'; % onshore cube
 load([doppvis_dir cubeName])
 
