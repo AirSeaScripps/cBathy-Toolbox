@@ -1,51 +1,54 @@
 
 clear
 
-mode = 'DoppVis';
-% mode = 'cBathy';
+% mode = 'DoppVis';
+mode = 'cBathy';
 
 %% Edit the settings file and load DoppVis data
 % First open the "settings" file DoppVis_settings.m in the editor and check
 % the input parameters.
 % Ensure that production mode = 1 (unless you want to run in debug mode)
 
-if strcmp(mode,'DoppVis')
-    % Load the DoppVis data and convert it to cBathy format
-    % DoppVis example datacube
-    doppvis_dir = '/Users/gsinnett/Documents/AirSea_Lab/Test_Cubes/';
-    cubeName = 'CUBE0294_DX0.5_NX512_UTM_X0000387834_UTM_Y0004071788_DT0.5_NT061_TI20230424_222757_554UTC_TF20230424_222830_054UTC.mat'; % SMODE wavy cube
-    % cubeName = 'CUBE0989_DX0.5_NX512_UTM_X0000293656_UTM_Y0003784253_DT0.5_NT198_TI20231031_190902_555UTC_TF20231031_191041_055UTC.mat'; % onshore cube
-    load([doppvis_dir cubeName])
-    
-    [CAM,RAW,T,XYZ] = DoppVis2cBathy(RES);
-    clearvars RES
-    
-    % now load the params file and look at the params variable
-    settings_file = 'DoppVis_settings';
-elseif strcmp(mode,'cBathy')
-    %% OR in debug mode, load a known cBathy dataset
-    
-    % Let's pick a low energy example run stored in DemoData
-    snapPn = 'DemoData/1447691400.Mon.Nov.16_16_30_00.GMT.2015.argus02b.c2.snap.jpg';
-    cubeName = 'DemoData/1447691340.Mon.Nov.16_16_29_00.GMT.2015.argus02b.cx.mBW.mat';
-    
-    % show the snapshot from this time to get a feel for the waves
-    % ISnap = imread(snapPn);
-    % figure(3); clf; imagesc(ISnap); axis off; title(snapPn)
-    
-    % Now load the stack then look at the variables.  Note the number of
-    % pixels and the number of samples in time.  There is XYZ data for each
-    % pixel.  We use RAW as the variable name for the data.  
-    load(cubeName) 
-    % now load the params file and look at the params variable
-    settings_file = 'argus02b';
-else
-    disp('I don''t know what mode we''re in. Please select either DoppVis or cBathy.')
-end
+if mode == 'DoppVis'
+% Load the DoppVis data and convert it to cBathy format
+% DoppVis example datacube
+doppvis_dir = '/Users/gsinnett/Documents/AirSea_Lab/Test_Cubes/';
+cubeName = 'CUBE0294_DX0.5_NX512_UTM_X0000387834_UTM_Y0004071788_DT0.5_NT061_TI20230424_222757_554UTC_TF20230424_222830_054UTC.mat'; % SMODE wavy cube
+% cubeName = 'CUBE0989_DX0.5_NX512_UTM_X0000293656_UTM_Y0003784253_DT0.5_NT198_TI20231031_190902_555UTC_TF20231031_191041_055UTC.mat'; % onshore cube
+load([doppvis_dir cubeName])
+
+[CAM,RAW,T,XYZ] = DoppVis2cBathy(RES);
+clearvars RES
+
+% now load the params file and look at the params variable
+settings_file = 'DoppVis_settings';
+
+
 
 
 eval(settings_file)        % creates the params structure.
 clear bathy % make sure we're working on a new bathy structure
+
+%% OR in debug mode, load a known cBathy dataset
+
+% Let's pick a low energy example run stored in DemoData
+snapPn = 'DemoData/1447691400.Mon.Nov.16_16_30_00.GMT.2015.argus02b.c2.snap.jpg';
+dataStackName = 'DemoData/1447691340.Mon.Nov.16_16_29_00.GMT.2015.argus02b.cx.mBW.mat';
+
+% show the snapshot from this time to get a feel for the waves
+% ISnap = imread(snapPn);
+% figure(3); clf; imagesc(ISnap); axis off; title(snapPn)
+
+% Now load the stack then look at the variables.  Note the number of
+% pixels and the number of samples in time.  There is XYZ data for each
+% pixel.  We use RAW as the variable name for the data.  
+load(dataStackName) 
+whos
+
+% now load the params file and look at the params variable
+stationStr = 'argus02b';
+
+
 %% Run cBathy
 % Create a few basic parts of the output bathy structure.
 bathy.epoch = num2str(T(1));        % epoch time start of collect
