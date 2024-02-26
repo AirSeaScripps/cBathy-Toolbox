@@ -1,0 +1,10 @@
+function [XYZ, T, RAW, CAM, bathy] = pre_edit_input(XYZ, T, RAW, CAM, bathy)
+% This is a debug helper function to pre-edit the input data for cBathy
+
+% Clip time?
+time_len = 256;
+T = 0:0.5:time_len/2 - 0.5; % make T 256 long
+RAW = RAW(1:256,:); % clip RAW to be 256 long
+
+
+end

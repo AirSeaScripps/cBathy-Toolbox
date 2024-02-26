@@ -1,8 +1,8 @@
 
 clear
 
-mode = 'DoppVis';
-% mode = 'cBathy';
+% mode = 'DoppVis';
+mode = 'cBathy';
 
 %% Edit the settings file and load DoppVis data
 % First open the "settings" file DoppVis_settings.m in the editor and check
@@ -52,9 +52,11 @@ bathy.epoch = num2str(T(1));        % epoch time start of collect
 bathy.sName = cubeName;        % stack name for the record
 bathy.params = params;              % save the params data
 
+[XYZ, T, RAW, CAM, bathy] = pre_edit_input(XYZ, T, RAW, CAM, bathy);
+
 % now carry out the cBathy analysis.  Omit the semicolon at the end so we
 % can see the full structure of the output.  NOTE - this may take a minute.
-bathy = analyzeBathyCollect(XYZ, T, RAW, CAM, bathy)
+bathy = analyzeBathyCollect(XYZ, T, RAW, CAM, bathy);
 
 %% plot the fCombined cBathy result (left panel) and the fCombined error
 % (right panel) of figure 1
